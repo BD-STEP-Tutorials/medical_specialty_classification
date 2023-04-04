@@ -10,7 +10,11 @@
 
 .ONESHELL:
 # run whole source code pipeline to build files listed here
-all: data/cleaned/medical_text_clean.csv data/processed/medical_text_processed.csv data/split/medical_text_train.csv data/split/medical_text_test.csv ml_models/rfc_tfidf_tx_clean_ents.joblib reports/clf_report_rfc_tfidf_text_clean_ents.csv
+all: data/cleaned/medical_text_clean.csv \
+	data/processed/medical_text_processed.csv \
+	data/split/medical_text_train.csv data/split/medical_text_test.csv \
+	ml_models/rfc_tfidf_tx_clean_ents.joblib \
+	reports/clf_report_rfc_tfidf_text_clean_ents.csv
 
 # install required python packages for project
 requirements: requirements.txt
@@ -29,7 +33,9 @@ install_scispacy_model:
 	pip install nlp_models/en_core_sci_sm-0.5.1
 
 # chain commands to download, unarchive and install the nlp model
-scispacy_model: download_scispacy_model unarchive_scispacy_model install_scispacy_model
+scispacy_model: download_scispacy_model \
+	unarchive_scispacy_model \
+	install_scispacy_model
 
 # delete downloaded spacy/scispacy models
 delete_nlp_models:
