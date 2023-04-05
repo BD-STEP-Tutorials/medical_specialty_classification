@@ -4,8 +4,6 @@
 # target : dependencies
 # 	action
 
-
-
 .PHONY: all clean scispacy_model 
 
 .ONESHELL:
@@ -14,11 +12,12 @@ all: data/cleaned/medical_text_clean.csv \
 	data/processed/medical_text_processed.csv \
 	data/split/medical_text_train.csv data/split/medical_text_test.csv \
 	ml_models/rfc_tfidf_tx_clean_ents.joblib \
-	reports/clf_report_rfc_tfidf_text_clean_ents.csv
+	reports/clf_report_rfc_tfidf_text_clean_ents.csv reports/confusion_matrix_rfc_tfidf_text_clean_ents.png
 
-# install required python packages for project
+# install required python packages for project and install project source code 
 requirements: requirements.txt
 	pip install -r requirements.txt
+	pip install -e .
 
 # download pre-trained nlp model
 download_scispacy_model: 
@@ -59,9 +58,10 @@ data/split/medical_text_train.csv data/split/medical_text_test.csv: src/split_da
 ml_models/rfc_tfidf_tx_clean_ents.joblib: src/train_classifier.py data/split/medical_text_train.csv
 	python src/train_classifier.py -i data/split/medical_text_train.csv -o ml_models/rfc_tfidf_tx_clean_ents.joblib 
 
-# generate classification report on test data
-reports/clf_report_rfc_tfidf_text_clean_ents.csv: src/evaluate_classifier.py ml_models/rfc_tfidf_tx_clean_ents.joblib data/split/medical_text_test.csv
-	python src/evaluate_classifier.py -i1 ml_models/rfc_tfidf_tx_clean_ents.joblib -i2 data/split/medical_text_test.csv -o reports/clf_report_rfc_tfidf_text_clean_ents.csv
+# generate classification report and confusion matrix on test data
+reports/clf_report_rfc_tfidf_text_clean_ents.csv reports/confusion_matrix_rfc_tfidf_text_clean_ents.png: src/evaluate_classifier.py ml_models/rfc_tfidf_tx_clean_ents.joblib data/split/medical_text_test.csv
+	python src/evaluate_classifier.py -i1 ml_models/rfc_tfidf_tx_clean_ents.joblib -i2 data/split/medical_text_test.csv -o1 reports/clf_report_rfc_tfidf_text_clean_ents.csv -o2 reports/confusion_matrix_rfc_tfidf_text_clean_ents.png
+
 
 # ---- END OF PIPELINE STAGES -----------------------------------------
 
@@ -72,6 +72,7 @@ clean:
 	rm -r data/split/medical_text_train.csv data/split/medical_text_test.csv 
 	rm -r ml_models/rfc_tfidf_tx_clean_ents.joblib
 	rm -r reports/clf_report_rfc_tfidf_text_clean_ents.csv
+	rm -r reports/confusion_matrix_rfc_tfidf_text_clean_ents.png
 	
 
 	
