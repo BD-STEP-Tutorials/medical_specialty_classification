@@ -1,3 +1,24 @@
+# allow .gitkeep files to be tracked
+!*/.gitkeep
+
+# allow raw data to be tracked so it's part of repo when repo is forked/cloned
+!data/raw/medical_text.csv
+
+# don't track other data dervied from raw data (e.g. cleaned/transformed data)
+data/*
+
+# don't track models
+ml_models/*.joblib
+
+# don't track spacy/scispacy models
 nlp_models/en_core_sci_sm-0.5.1
 nlp_models/*.tar.gz
+
+# don't track output reports
+reports/*
+
+# don't track source code metadata files that result from running $ pip install -e .
+src.egg-info/*
+
+
 
