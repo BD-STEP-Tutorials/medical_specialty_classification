@@ -1,15 +1,16 @@
-# medical_specialty_classification project
+# medical_specialty_classification tutorial project
 
 ## Motivation
 
 - Adaptation of Kaggle competition: https://www.kaggle.com/competitions/medical-specialty-classification/
 - These are publically available medical notes with corresponding specialties
-- Goal is to predict the medical specialty from the content of the text of the note
+- Machine learning goal is to predict the medical specialty from the content of the text of the note
+- Tutorial goal is to introduce good practices in structuring, automating and documenting data science projects
 
 ## Codespace Setup
 
 - Project is intended to be run from GitHub codespace
-- Codespace should install Python 3.10, Python package requirements, scispacy nlp model and select VSCode Extensions when it is first built
+- Codespace should automatically install Python 3.10, Python package requirements, source code, scispacy nlp model and select VSCode Extensions when first built
 - Full details of codespace build in .devcontainer/devcontainer.json file
 
 ## Raw Data
@@ -33,8 +34,9 @@
     - Does 5-fold cross validation during tuning with RandomSearchCV and then refits model on all training data using parameters found to give best fit (using f1 score metric)
     - Stores best performing model in ml_models folder (ml_models/rfc_tfidf_tx_clean_ents.joblib)
 5. Evaluate Performance of Model on Test Data (src/evaluate_classifier.py)
-    - Evaluates model performance on test data
-    - Generates classification report on model performance that is stored in reports folder (clf_report_rfc_tfidf_text_clean_ents.csv) 
+    - Evaluates model performance on test (holdout) data
+    - Generates classification report on model performance that is stored in reports folder (reports/clf_report_rfc_tfidf_text_clean_ents.csv)
+    - Generates confusion matrix plot that is stored in reports folder (reports/confusion_matrix_rfc_tfidf_text_clean_ents.png)
 
 ## makefile Details
 
@@ -66,15 +68,15 @@
 
 ## EDA Folder
 
-- Contains some EDA/development work done with iPython from VSCode used to explore data and develop stages in pipeline 
+- Contains some EDA/development work done with iPython from VSCode used to explore data and develop some of the stages in the source code pipeline
 
 ## setup.py file
 
-- Not strictly needed for project as currently setup but used to install source on virtual machine/virtual environment
+- Used to install project source code into Codespace Python environment
 
 ## LICENSE
 
-- MIT License (very permissive) states how project software can be used 
+- MIT License states how project software can be used (very permissive) 
 
 ## Author/Contact
 
